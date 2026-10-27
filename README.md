@@ -7,4 +7,4 @@
 - https://www.overleaf.com/read/jxnyydngyrds#694db7
 
 ## Checkpoint 2 Video
-- 
+- https://youtu.be/kpvZn9RIH8c

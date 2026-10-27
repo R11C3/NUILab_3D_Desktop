@@ -6,14 +6,14 @@ public class App_Face_Player : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] Transform billboard;
-    XRGrabInteractable grab;
+    [SerializeField] XRGrabInteractable grab;
     bool facePlayer = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         grab = GetComponent<XRGrabInteractable>();
-        target = GameObject.Find("MR Interaction Setup").transform;
+        target = GameObject.Find("Main Camera").transform;
     }
 
     // Update is called once per frame
@@ -25,12 +25,22 @@ public class App_Face_Player : MonoBehaviour
         if(!facePlayer)
             return; 
 
-        transform.LookAt(target);
-        billboard.LookAt(target);
+        Vector3 direction = target.position - transform.position;
+
+        direction.y = 0;
+
+        if(direction != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+            transform.rotation = lookRotation * Quaternion.Euler(0, 180, 0);
+            billboard.rotation = lookRotation * Quaternion.Euler(0, 180, 0);
+        }
     }
 
     public void facePlayerToggle()
     {
         facePlayer = !facePlayer;
+        // facePlayer = true;
     }
 }

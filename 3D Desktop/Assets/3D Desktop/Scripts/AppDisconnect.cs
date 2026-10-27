@@ -1,19 +1,30 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 
 public class AppDisconnect : MonoBehaviour
 {
     [SerializeField] XRGrabInteractable grab;
+    T_Application application;
 
-    void Start()
+    void Awake()
     {
-        grab = GetComponent<XRGrabInteractable>();
+        grab.selectExited.AddListener(OnGrab);
+        application = GetComponent<T_Application>();
     }
 
-    void Update()
+    void OnDestroy()
     {
-        if(grab.isSelected)
-            transform.parent = null;
+        grab.selectExited.RemoveListener(OnGrab);
     }
+
+    void OnGrab(SelectExitEventArgs args)
+    {
+        transform.parent = null;
+        transform.localScale = Vector3.one * 0.8f;
+        transform.rotation = Quaternion.identity;
+        application.Activate();
+    }
+        
 }
