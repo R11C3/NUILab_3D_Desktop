@@ -73,5 +73,6 @@ public class Application_Actions : MonoBehaviour
             transform.position.y + 0.5f,
             transform.position.z + 0.5f);
         Instantiate(gameObject, spawnPosition, Quaternion.identity);
+        mainApp.agentObserver.FileDuplicated(mainApp.fileName);
     }
 }

@@ -2085,6 +2085,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MediaApplication
   appSO: {fileID: 0}
   appName: {fileID: 1204138721037698877}
+  grabInteractable: {fileID: 8584156388021268171}
+  agentObserver: {fileID: 0}
   buttonHolder: {fileID: 8917801611473616388}
   baseFilePath: 
   fileName: Unassigned Media

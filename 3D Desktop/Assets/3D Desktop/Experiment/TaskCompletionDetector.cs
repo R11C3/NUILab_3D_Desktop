@@ -7,7 +7,7 @@ public class TaskCompletionDetector : MonoBehaviour
 
     // Call this from the existing file interaction code
     // when a file is placed in the designated workspace.
-    public void NotifyFilePlaced(string fileId)
+    public void NotifyFilePlaced(string fileId, GameObject obj)
     {
         if (experimentManager == null ||
             experimentManager.State !=
@@ -21,6 +21,7 @@ public class TaskCompletionDetector : MonoBehaviour
             fileId == task.targetId)
         {
             experimentManager.CompleteCurrentTask();
+            Destroy(obj);
         }
     }
 

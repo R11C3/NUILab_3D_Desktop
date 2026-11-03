@@ -7,23 +7,12 @@ public class MediaApplication : T_Application
     {
         Debug.Log("Activated");
         buttonHolder.SetActive(true);
+        agentObserver.FileReleased(fileName);
     }
 
     public override void Deactivate()
     {
         Debug.Log("DeActivated");
         buttonHolder.SetActive(false);
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

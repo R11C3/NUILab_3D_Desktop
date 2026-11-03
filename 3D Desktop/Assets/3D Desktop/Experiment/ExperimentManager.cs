@@ -27,6 +27,7 @@ public class ExperimentManager : MonoBehaviour
         ExperimentCondition.Solo;
 
     public ExperimentTask[] tasks;
+    int completedCount = 0;
 
     [Header("Events")]
     public UnityEvent<ExperimentTask> onTaskStarted;
@@ -98,6 +99,11 @@ public class ExperimentManager : MonoBehaviour
         State = ExperimentState.Completed;
 
         onTaskCompleted?.Invoke(CurrentTask);
+        completedCount++;
+
+        string[] csv = {participantId, LastTaskDuration.ToString(), completedCount.ToString()};
+
+        ExperimentLogger.AppendToCSV(csv);
     }
 
     public void AbandonCurrentTask()

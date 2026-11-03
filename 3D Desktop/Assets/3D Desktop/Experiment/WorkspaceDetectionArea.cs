@@ -97,7 +97,7 @@ public class WorkspaceDetectionArea : MonoBehaviour
                 if (completionDetector != null)
                 {
                     completionDetector.NotifyFilePlaced(
-                        identity.fileName
+                        identity.fileName, identity.gameObject
                     );
                 }
             }

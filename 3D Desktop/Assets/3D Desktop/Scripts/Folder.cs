@@ -19,6 +19,7 @@ public class Folder : T_Application
     void Start()
     {
         filePath = Path.Combine(Application.persistentDataPath, baseFilePath);
+        agentObserver = UnityEngine.Object.FindAnyObjectByType<AgentObserver>();
 
         if (!Directory.Exists(filePath))
         {
@@ -26,6 +27,8 @@ public class Folder : T_Application
         }
 
         Debug.Log("Path: " + filePath);
+        appName.text = fileName;
+        Deactivate();
     }
 
     // Update is called once per frame
@@ -110,6 +113,7 @@ public class Folder : T_Application
         Debug.Log(Application.persistentDataPath);
         buttonHolder.SetActive(true);
         GenerateDirectoryApps();
+        agentObserver.FolderOpened(fileName);
     }
 
     public override void Deactivate()
