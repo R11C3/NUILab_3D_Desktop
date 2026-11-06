@@ -24,7 +24,7 @@ public class ExperimentManager : MonoBehaviour
     public string participantId = "001";
 
     public ExperimentCondition condition =
-        ExperimentCondition.Solo;
+        ExperimentCondition.AgentAssisted;
 
     public ExperimentTask[] tasks;
     int completedCount = 0;

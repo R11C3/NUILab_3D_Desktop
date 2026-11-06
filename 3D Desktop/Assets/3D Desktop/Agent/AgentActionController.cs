@@ -34,6 +34,50 @@ public class AgentActionController : MonoBehaviour
         }
     }
 
+    public void ShowTaskTarget(string targetFileName)
+    {
+        string fullPath = knowledge.FindFilePath(targetFileName);
+
+        if (string.IsNullOrEmpty(fullPath))
+        {
+            agentUI.DisplayResponse(
+                "I couldn't locate the target file."
+            );
+
+            return;
+        }
+
+        string displayPath = knowledge.GetDisplayPath(fullPath);
+
+        agentUI.DisplayResponse(
+            "Your target file is:\n" + displayPath
+        );
+
+        HighlightTarget(targetFileName);
+    }
+
+
+    private void HighlightTarget(string fileId)
+    {
+        // Find the target cube in the scene.
+        T_Application[] cubes =
+            FindObjectsByType<T_Application>();
+
+        foreach (T_Application cube in cubes)
+        {
+            if (cube.fileName == fileId)
+            {
+                // Apply your project's existing highlight effect here.
+                Debug.Log("Highlighting target: " + fileId);
+
+                // Example: call your cube's highlight method.
+                // cube.SetHighlighted(true);
+
+                break;
+            }
+        }
+    }
+
     private void HighlightTarget()
     {
         // Connect to your existing cube highlighting system.

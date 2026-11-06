@@ -11,11 +11,13 @@ public class Folder : T_Application
     [SerializeField] GameObject textAppPrefab;
     [SerializeField] GameObject folderAppPrefab;
 
+    public string rootFolderPath;
+
     string filePath;
 
     [Header("Spawning Settings")]
     [SerializeField] float radius = 0.8f;
-    
+
     void Start()
     {
         filePath = Path.Combine(Application.persistentDataPath, baseFilePath);
@@ -26,6 +28,8 @@ public class Folder : T_Application
             Directory.CreateDirectory(filePath);
         }
 
+        rootFolderPath = Path.Combine(Application.persistentDataPath, "root");
+
         Debug.Log("Path: " + filePath);
         appName.text = fileName;
         Deactivate();
@@ -34,7 +38,7 @@ public class Folder : T_Application
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // This will instantiate each file inside of the directory in a sphere around the folder
@@ -42,10 +46,10 @@ public class Folder : T_Application
     {
         ClearFiles();
         FillFolderContents();
-        
+
         float angleStep = 360f / sphereOrigin.transform.childCount;
 
-        for(int i = 0; i < sphereOrigin.transform.childCount; i++)
+        for (int i = 0; i < sphereOrigin.transform.childCount; i++)
         {
             float angle = angleStep * i * Mathf.Deg2Rad;
 
@@ -66,30 +70,30 @@ public class Folder : T_Application
         List<String> paths = new List<string>();
         paths.AddRange(Directory.GetFiles(filePath));
         paths.AddRange(Directory.GetDirectories(filePath));
-        
-        if(paths.Count == 0)
+
+        if (paths.Count == 0)
             return;
-        
+
         folderContents = new GameObject[paths.Count];
 
-        for(int i = 0; i < paths.Count; i++)
+        for (int i = 0; i < paths.Count; i++)
         {
             Console.WriteLine(paths[i]);
             string extension = Path.GetExtension(paths[i]).ToLower();
 
             GameObject appToSpawn;
 
-            if(Directory.Exists(paths[i]))
+            if (Directory.Exists(paths[i]))
                 appToSpawn = folderAppPrefab;
-            else if(extension.Equals(".txt"))
+            else if (extension.Equals(".txt"))
                 appToSpawn = textAppPrefab;
-            else if(extension.Equals(".mp4"))
+            else if (extension.Equals(".mp4"))
                 appToSpawn = mediaAppPrefab;
-            else if(extension.Equals("folder"))
+            else if (extension.Equals("folder"))
                 appToSpawn = folderAppPrefab;
             else
                 appToSpawn = mediaAppPrefab;
-            
+
             GameObject spawn = Instantiate(appToSpawn, sphereOrigin.transform);
             T_Application appDetails = spawn.GetComponent<T_Application>();
             int length = Application.persistentDataPath.Length + 1;
@@ -98,6 +102,15 @@ public class Folder : T_Application
             folderContents[i] = spawn;
             appDetails.Deactivate();
         }
+    }
+
+    public void NavigateToDirectory(string path)
+    {
+        if(!Directory.Exists(path))
+            return;
+        
+        baseFilePath = path;
+        GenerateDirectoryApps();
     }
 
     void ClearFiles()

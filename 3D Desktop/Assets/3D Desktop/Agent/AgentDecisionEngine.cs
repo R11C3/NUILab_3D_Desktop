@@ -193,7 +193,14 @@ public class AgentDecisionEngine : MonoBehaviour
 
     private void OnTaskStarted(ExperimentTask task)
     {
-        ResetForNextTask();
+        if (experimentManager.condition !=
+            ExperimentCondition.AgentAssisted)
+            return;
+
+        if (task == null || string.IsNullOrEmpty(task.targetId))
+            return;
+
+        actionController.ShowTaskTarget(task.targetId);
     }
 
     private void OnTaskCompleted(ExperimentTask task)
